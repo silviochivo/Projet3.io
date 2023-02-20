@@ -223,3 +223,9 @@ button:active {
 	color: white;
 }
 
+
+button:focus {
+	background-color: #1D6154;
+	color: white;
+}
+
