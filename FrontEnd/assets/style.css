@@ -98,6 +98,23 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+li a:hover {
+	color: #B1663C;
+}
+
+a {
+	text-decoration: none;
+}
+
+a :focus  {
+	text-decoration: none;
+}
+
+a :active  {
+	text-decoration: none;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -227,5 +244,76 @@ button:active {
 button:focus {
 	background-color: #1D6154;
 	color: white;
+}
+
+.ConexionBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 40%;
+	margin: auto;
+	text-align: left;
+}
+
+
+.ConexionBox h2 {
+	text-align: center;
+}
+
+.ConexionBox p {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #3D3D3D;
+}
+
+.ConexionBox a {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	text-decoration-line: underline;
+	color: black;
+	margin-bottom: 379px;
+	align-self: center;
+}
+
+#email{
+	margin-bottom: 30px;
+}
+
+#password,
+.ConexionBox h2 {
+	margin-bottom: 37px;
+}
+
+.Boutton-Send-Id {
+	margin-bottom: 28px;
+	background-color:#1D6154 ;
+	width: 179px;
+	align-self: center;
+	text-align: center;
+}
+
+.Boutton-Send-Id p {
+	color: #FFFFFF;
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 17px;
+	text-align: center;
+	align-self: center;
+}
+
+#password,
+#email {
+	background: #FFFFFF;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: none;
+	height: 50px;
 }
 
