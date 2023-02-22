@@ -36,7 +36,7 @@ async function loadProjects() {
 
 loadProjects();
 
-/*Filtres */
+//Filtres 
 
 async function filterProjects() {
     const response = await fetch("http://localhost:5678/api/works");
