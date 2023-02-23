@@ -48,11 +48,16 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+
+body:not(.editMode) {
+	max-width: 1140px;
+}
+
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -317,3 +322,54 @@ button:focus {
 	height: 50px;
 }
 
+
+/*Mode édition*/
+
+header {
+	display: flex;
+	flex-direction: column;
+}
+
+.divHeader {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	text-align: center;
+}
+
+.editMode {
+	background-color: black;
+	width: 100%;
+	height: 59px;
+	margin-top: 0px;
+	margin-top: 0%;
+	max-width: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.editMode p {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 19px;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+#Boutton-Publier-Changements {
+	border-color: #FFFFFF;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	text-align: center;
+	color: #000000;
+	padding: 8px 15px;
+	margin: 10px;
+}

@@ -24,12 +24,13 @@ async function authentification () {
         sessionStorage.setItem('userData', JSON.stringify(dataSession));
         // Rediriger vers la page de Modification
         window.location.href = "index.html";
-  
+
+        editMode()
+
     }else {
       //Erreur Identifiant ou Mot de Passe
       console.log(error)
       console.log(response.statusText); // Erreur Connetion 
-      
     }
   
   }catch (error) {
@@ -40,3 +41,37 @@ async function authentification () {
   }
   
   authentification();
+
+
+// Fonction qui crée le mode Administrateur 
+
+  function editMode() {
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const header = document.querySelector('header');
+    
+    if (userData) {
+      const divEditMode = document.createElement('div');
+      divEditMode.classList.add('editMode');
+      divEditMode.style.marginBottom = '30px';
+      
+      const p = document.createElement('p');
+      p.textContent = 'mode édition';
+      let boutonEnregistrer = document.createElement('button');
+      boutonEnregistrer.id = 'Boutton-Publier-Changements';
+      boutonEnregistrer.textContent = 'publier les changements';
+
+      const headerEditMode = document.querySelector('header');
+      headerEditMode.style.marginTop = '0px';
+
+      divEditMode.appendChild(p);
+      divEditMode.appendChild(boutonEnregistrer);
+      header.appendChild(divEditMode);
+    }
+  }
+
+  if (window.location.pathname === "/index.html") {
+    editMode();
+  }
+
+
+  
