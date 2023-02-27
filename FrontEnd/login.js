@@ -1,9 +1,19 @@
 //Login 
 
 async function authentification () {
-    const formulaireLogin = document.querySelector(".ConexionBox");
-    formulaireLogin.addEventListener("submit", async function(event){
-    event.preventDefault();
+  const formulaireLogin = document.querySelector(".ConexionBox");
+  
+  const errorMessage = document.createElement('p');
+  errorMessage.textContent = "Email ou Mdp incorrect. Veuillez réssayer";
+  errorMessage.style.color = "red";
+  errorMessage.classList = "messageErreur"
+  errorMessage.style.display ="none"
+  // insérer le message d'erreur entre le h2 et le p
+  formulaireLogin.insertBefore(errorMessage, formulaireLogin.children[1]); 
+
+  
+  formulaireLogin.addEventListener("submit", async function(event){
+  event.preventDefault();
   
     let login = {
       email : document.getElementById("email").value,
@@ -31,10 +41,14 @@ async function authentification () {
       //Erreur Identifiant ou Mot de Passe
       console.log(error)
       console.log(response.statusText); // Erreur Connetion 
+
+      errorMessage.style.display = "block";
     }
   
   }catch (error) {
-    console.log("Erreur conection API")
+    console.log("Erreur conection User/login")
+
+    errorMessage.style.display = "block";
   }
   
     });
@@ -56,6 +70,13 @@ async function authentification () {
       
       const p = document.createElement('p');
       p.textContent = 'mode édition';
+
+      const icon = document.createElement('i');
+      icon.classList.add('fa-regular', 'fa-pen-to-square');
+
+      divEditMode.appendChild(icon);
+      divEditMode.appendChild(p);
+
       let boutonEnregistrer = document.createElement('button');
       boutonEnregistrer.id = 'Boutton-Publier-Changements';
       boutonEnregistrer.textContent = 'publier les changements';

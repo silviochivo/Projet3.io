@@ -359,6 +359,13 @@ header {
 	line-height: 19px;
 	text-align: center;
 	color: #FFFFFF;
+	margin-right: 10px;
+}
+
+.editMode i {
+	color: white;
+	background-color: black;
+	margin-right: 8px;
 }
 
 #Boutton-Publier-Changements {
@@ -371,5 +378,14 @@ header {
 	text-align: center;
 	color: #000000;
 	padding: 8px 15px;
-	margin: 10px;
+}
+
+.messageErreur {
+	margin-bottom: 20px;
+	border-color: red;
+	align-self: center;
+}
+
+i {
+	color: #000000;
 }
