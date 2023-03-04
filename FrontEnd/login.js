@@ -4,7 +4,7 @@ async function authentification () {
   const formulaireLogin = document.querySelector(".ConexionBox");
   
   const errorMessage = document.createElement('p');
-  errorMessage.textContent = "Email ou Mdp incorrect. Veuillez réssayer";
+  errorMessage.textContent = "Email ou Mot de passe incorrect. Veuillez réssayer";
   errorMessage.style.color = "red";
   errorMessage.classList = "messageErreur"
   errorMessage.style.display ="none"
@@ -40,59 +40,83 @@ async function authentification () {
     }else {
       //Erreur Identifiant ou Mot de Passe
       console.log(error)
-      console.log(response.statusText); // Erreur Connetion 
+      console.log(response.statusText); // Erreur Mot de passe 
 
       errorMessage.style.display = "block";
     }
   
   }catch (error) {
-    console.log("Erreur conection User/login")
+    console.log("Erreur Email / Mot de Passe")
 
     errorMessage.style.display = "block";
   }
   
     });
-  }
+}
   
-  authentification();
+authentification();
 
 
 // Fonction qui crée le mode Administrateur 
 
-  function editMode() {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
-    const header = document.querySelector('header');
+function editMode() {
+  const userData = JSON.parse(sessionStorage.getItem('userData'));
+  const header = document.querySelector('header');
+  const divHeader =document.querySelector('.divHeader');
+  const logoutButton = document.getElementById("Logout");
+  const loginButton = document.getElementById("Login");
+  const cacherFiltres = document.querySelector('.Bouton-Filter');
+  const divEditMode = document.querySelector('.editMode');
+  const modaleIcon = document.getElementById("Modale");
+  const modifierImage = document.querySelector('.Modifier-Image');
+  const lienModale = document.querySelector('.Lien-Open-Modale');
     
-    if (userData) {
-      const divEditMode = document.createElement('div');
-      divEditMode.classList.add('editMode');
-      divEditMode.style.marginBottom = '30px';
-      
-      const p = document.createElement('p');
-      p.textContent = 'mode édition';
+  if (userData) {
 
-      const icon = document.createElement('i');
-      icon.classList.add('fa-regular', 'fa-pen-to-square');
+    header.style.marginTop = "0px"
+    divEditMode.style.visibility = "visible";
+    divHeader.style.marginTop = "90px"
+    modaleIcon.style.display = "block";
+    lienModale.style.display = "block";
+    modifierImage.style.visibility = "visible";
 
-      divEditMode.appendChild(icon);
-      divEditMode.appendChild(p);
+    logoutButton.style.display = "block";
+    logoutButton.style.marginLeft = "-20px";
+    logoutButton.style.marginRight = "-10px";
+    loginButton.innerHTML = "";
 
-      let boutonEnregistrer = document.createElement('button');
-      boutonEnregistrer.id = 'Boutton-Publier-Changements';
-      boutonEnregistrer.textContent = 'publier les changements';
-
-      const headerEditMode = document.querySelector('header');
-      headerEditMode.style.marginTop = '0px';
-
-      divEditMode.appendChild(p);
-      divEditMode.appendChild(boutonEnregistrer);
-      header.appendChild(divEditMode);
+    cacherFiltres.style.marginTop = "0px";
+    cacherFiltres.innerHTML = "";
+    
+    const logout = LogoutSession();
+    
+    if (logout) {
+      divHeader.appendChild(logout);
     }
+  } else {
+    logoutButton.style.display = 'none';
+    loginButton.style.display = 'block';
   }
-
-  if (window.location.pathname === "/index.html") {
-    editMode();
-  }
-
-
   
+}
+
+if (window.location.pathname === "/index.html") {
+  editMode();
+}
+
+
+// Fonction qui crée le bouton de déconnexion
+function LogoutSession() {
+  const userData = JSON.parse(sessionStorage.getItem('userData'));
+
+  if (userData) {
+    
+    logoutButton.addEventListener('click', function() {
+      sessionStorage.clear();
+      window.location.reload();
+    });
+
+  }
+}
+
+    

@@ -53,7 +53,7 @@ body {
 	font-size: 14px;
 }
 
-body:not(.editMode) {
+body {
 	max-width: 1140px;
 }
 
@@ -322,6 +322,13 @@ button:focus {
 	height: 50px;
 }
 
+.Modifier-Image {
+	margin-left: 10%;
+	margin-top: 1em;
+	display: flex;
+	flex-direction: row;
+	visibility: hidden;
+}
 
 /*Mode édition*/
 
@@ -341,13 +348,15 @@ header {
 	background-color: black;
 	width: 100%;
 	height: 59px;
-	margin-top: 0px;
-	margin-top: 0%;
 	max-width: none;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	margin-top: 0px;
+	margin-bottom: 30px;
+	visibility: hidden;
+	position: absolute;
 }
 
 
@@ -388,4 +397,109 @@ header {
 
 i {
 	color: #000000;
+}
+
+#Logout {
+	display: none;
+}
+
+#Modale {
+	display: none;
+	margin-left: 20px;
+}
+
+.Projets {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	
+}
+
+.Projets p,
+.Projets i {
+	margin-bottom: 2em;
+}
+
+/*Modale */
+
+#openModale {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	background-color: #FFFFFF;
+	border-radius: 1em;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.Lien-Open-Modale {
+	display: none;
+}
+
+#titlemodal {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 26px;
+	line-height: 30px;
+	text-align: center;
+	color: #000000;
+}
+
+.Modale-Wrap {
+	width: 40%;
+	height: 60%;
+	background-color: #FFFFFF;
+	border-radius: 10px;
+}
+
+.Modal-Close {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 2em;
+	margin-right: 2em;
+	margin-top: 2em;
+}
+
+.Button-Modale {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.galeriePhotoModale {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	border-bottom: 1px solid #B3B3B3;
+	width: 70%;
+	margin-left: 15%;
+	margin-bottom: 2em;
+	align-items: center;
+}
+
+.Ajout-Button-Modale {
+	color: #FFFFFF;
+	font-family: 'syne';
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 17px;
+	background-color: #1D6154;
+	border: 1px solid #1D6154;
+	width: 200px;
+	border-radius: 60px;
+	padding: 0.5em 0.3em 0.5em 0.3em;
+	margin-bottom: 1em;
+	cursor: pointer;
+}
+
+.Supprimer-Button-Modale {
+	color: #D65353;
 }

@@ -13,14 +13,19 @@
 </head>
 <body>
 <header>
-	<script src="login.js"></script>
+	<div class="editMode">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<p>mode édition</p>
+		<button  id="Boutton-Publier-Changements">publier les changements</button>
+	</div>
 	<div class="divHeader">
 		<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 		<nav>
-			<ul>
+			<ul class="navigationBar">
 				<li><a href="#portfolio">projets</a></li>
 				<li><a href="#contact">contact</a></li>
-				<li><a href="login.html">login</a></li>
+				<li><a href="login.html" id="Login">login</a></li>
+				<li><a href="login.html" id="Logout">logout</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -30,6 +35,10 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<figcaption class="Modifier-Image">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<a href="#openModale"><p> modifier</p></a>
+			</figcaption>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -40,14 +49,33 @@
 	</section>
 	<section id="portfolio">
 		<script src="works.js"></script>
-		<h2>Mes Projets</h2>
-		<i class="fa-regular fa-pen-to-square"></i>
+		<div class="Projets">
+			<h2>Mes Projets</h2>
+			<i class="fa-regular fa-pen-to-square" id="Modale"></i>
+			<a href="#openModale" class="Lien-Open-Modale"><p>modifier</p></a>
+		</div>
+		<aside id="openModale" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" aria-modal="false" style="display: none;">
+			<div class="Modale-Wrap">
+				<div class="Modal-Close">
+					<a href="#"><i class="fa-solid fa-xmark icone"></i></a>
+				</div>
+				<h2 id="titlemodal">Galerie photo</h2>
+				<div class="galeriePhotoModale"></div>
+				<div class="Button-Modale">
+					<button class="Ajout-Button-Modale">Ajouter une photo</button>
+					<a href="#" class="Supprimer-Button-Modale">Supprimer la galerie</a>
+				</div>
+			</div>
+		</aside>
+		<script src="modale.js"></script>
+		
 		<div class="Bouton-Filter">
 			<button id="Boutton-Filter-Tous" autofocus>Tous</button>
 			<button id="Boutton-Filter-Objets">Objets</button>
 			<button id="Boutton-Filter-Appartements">Appartements</button>
 			<button id="Boutton-Filter-Hotels-Et-Restaurants">Hôtels et Restaurants</button>
 		</div>
+		<script src="login.js"></script>
 		<div class="gallery">
 		</div>
 	</section>
@@ -64,6 +92,7 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
+	
 </main>
 
 <footer>
