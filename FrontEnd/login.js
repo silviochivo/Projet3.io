@@ -110,7 +110,6 @@ function LogoutSession() {
   const userData = JSON.parse(sessionStorage.getItem('userData'));
 
   if (userData) {
-    
     logoutButton.addEventListener('click', function() {
       sessionStorage.clear();
       window.location.reload();

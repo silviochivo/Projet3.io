@@ -53,8 +53,12 @@ body {
 	font-size: 14px;
 }
 
-body {
+main,
+footer,
+.divHeader {
 	max-width: 1140px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 
@@ -129,7 +133,6 @@ a :active  {
 }
 #introduction img {
 	display: block;
-	margin: auto;
 	width: 80%;
 }
 
@@ -161,7 +164,7 @@ a :active  {
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -323,7 +326,6 @@ button:focus {
 }
 
 .Modifier-Image {
-	margin-left: 10%;
 	margin-top: 1em;
 	display: flex;
 	flex-direction: row;
@@ -342,6 +344,7 @@ header {
 	flex-direction: row;
 	justify-content: space-between;
 	text-align: center;
+	width: 100%;
 }
 
 .editMode {
@@ -357,6 +360,7 @@ header {
 	margin-bottom: 30px;
 	visibility: hidden;
 	position: absolute;
+	margin-left: 0%;
 }
 
 
@@ -422,21 +426,23 @@ i {
 	margin-bottom: 2em;
 }
 
+.Modale-link {
+	margin-left: 10px;
+}
+
 /*Modale */
 
 #openModale {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: absolute;
 	background-color: #FFFFFF;
-	border-radius: 1em;
 	width: 100%;
 	height: 100%;
 	top: 0;
 	left: 0;
-	position: fixed;
 	background: rgba(0, 0, 0, 0.2);
+	position: fixed;
 }
 
 .Lien-Open-Modale {
@@ -454,10 +460,12 @@ i {
 }
 
 .Modale-Wrap {
-	width: 40%;
-	height: 60%;
+	width: 50%;
+	height: 90%;
 	background-color: #FFFFFF;
 	border-radius: 10px;
+	/*max-height: 750px;*/
+	min-width: 250px;
 }
 
 .Modal-Close {
@@ -466,6 +474,7 @@ i {
 	margin-bottom: 2em;
 	margin-right: 2em;
 	margin-top: 2em;
+	height: 2px;
 }
 
 .Button-Modale {
@@ -479,8 +488,8 @@ i {
 	justify-content: center;
 	flex-wrap: wrap;
 	border-bottom: 1px solid #B3B3B3;
-	width: 70%;
-	margin-left: 15%;
+	width: 75%;
+	margin-left: 13%;
 	margin-bottom: 2em;
 	align-items: center;
 }
@@ -502,4 +511,147 @@ i {
 
 .Supprimer-Button-Modale {
 	color: #D65353;
+}
+
+/*Inside Modale*/
+
+.Images-Modale {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	grid-row-gap: 10px;
+	margin-bottom: 10px;
+}
+
+.divIcon {
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: end;
+}
+
+.divIcon a {
+	background-color: #000000;
+	border-radius: 2px;
+	margin-top: 7%;
+	margin-right: 5%;
+}
+
+.divIcon i {
+	padding: 2px;
+	border-radius: 5px;
+}
+
+.fa-trash-can,
+.fa-arrows-up-down-left-right {
+	color: white;
+	background-color: #000000;
+}
+
+.fa-arrows-up-down-left-right {
+	margin-right: 10%;
+}
+
+.fa-arrow-left-long {
+	margin-left: 5%;
+}
+
+/*img:hover + .fa-arrows-up-down-left-right{
+	display: block;
+}*/
+.Modale-Wrap h2 {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 26px;
+	line-height: 30px;
+	text-align: center;
+	color: #000000;
+}
+
+
+/*Modale page 2*/
+
+.Buttons-Navigation-Modale {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 2em;
+	margin-right: 2em;
+	margin-top: 2em;
+	height: 2px;
+}
+
+.Ajout-Photos-Modale{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 75%;
+	margin-left: 13%;
+	background-color: #E8F1F6;
+	border-radius: 3px;
+	margin-bottom: 10px;
+}
+
+.fa-image {
+	color: #B9C5CC;
+	background-color: #E8F1F6;
+}
+
+.Ajout-Photos-Modale input{
+	color:#306685 ;
+	background-color: #CBD6DC;
+	border-color: #CBD6DC;
+	box-shadow: none;
+	padding: 10px 5px;
+	border-style: none;
+	margin-bottom: 5px;
+	margin-top: 0px;
+}
+
+.Ajout-Photos-Modale i {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.Ajout-Photos-Modale p {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 10px;
+	line-height: 12px;
+	text-align: center;
+	margin-bottom: 15px;
+	margin-top: 0px;
+}
+
+.Infos-Photos-Modale {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 75%;
+	margin-left: 13%;
+}
+
+.Infos-Photos-Modale input,
+.Infos-Photos-Modale select {
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border-style: none;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	height: 25px;
+}
+
+.Infos-Photos-Modale #valider {
+	background: #A7A7A7;
+	border-radius: 60px;
+	margin-top: 10px;
+}
+
+.Border {
+	border-bottom: 1px solid #B3B3B3;
+	margin-top: 15px ;
+	margin-bottom: 15px;
 }
