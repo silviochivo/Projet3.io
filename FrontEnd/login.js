@@ -82,7 +82,6 @@ function editMode() {
 
     logoutButton.style.display = "block";
     logoutButton.style.marginLeft = "-20px";
-    logoutButton.style.marginRight = "-10px";
     loginButton.innerHTML = "";
 
     cacherFiltres.style.marginTop = "0px";
@@ -108,14 +107,43 @@ if (window.location.pathname === "/index.html") {
 // Fonction qui crée le bouton de déconnexion
 function LogoutSession() {
   const userData = JSON.parse(sessionStorage.getItem('userData'));
+  const logoutButton = document.getElementById("Logout");
 
   if (userData) {
     logoutButton.addEventListener('click', function() {
       sessionStorage.clear();
+      clearEditMode();
+      console.log('session fermée')
       window.location.reload();
     });
 
   }
 }
 
-    
+//Fonction qui renitialise le mode administrateur 
+
+function clearEditMode() {
+  const header = document.querySelector('header');
+  const divHeader = document.querySelector('.divHeader');
+  const logoutButton = document.getElementById("Logout");
+  const loginButton = document.getElementById("Login");
+  const cacherFiltres = document.querySelector('.Bouton-Filter');
+  const divEditMode = document.querySelector('.editMode');
+  const modaleIcon = document.getElementById("Modale");
+  const modifierImage = document.querySelector('.Modifier-Image');
+  const lienModale = document.querySelector('.Lien-Open-Modale');
+
+  header.style.marginTop = "";
+  divEditMode.style.visibility = 'hidden';
+  divHeader.style.marginTop = "";
+  modaleIcon.style.display = 'none';
+  lienModale.style.display = 'none';
+  modifierImage.style.visibility = 'hidden';
+
+  logoutButton.style.display = "";
+  logoutButton.style.marginLeft = "";
+  logoutButton.style.marginRight = "";
+
+  cacherFiltres.style.marginTop = "";
+}
+

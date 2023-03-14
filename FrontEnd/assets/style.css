@@ -87,6 +87,10 @@ h1 > span {
 ;
 }
 
+.divHeader h1 {
+	text-align: left;
+}
+
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -134,6 +138,7 @@ a :active  {
 #introduction img {
 	display: block;
 	width: 80%;
+	margin: auto;
 }
 
 #introduction article {
@@ -330,6 +335,7 @@ button:focus {
 	display: flex;
 	flex-direction: row;
 	visibility: hidden;
+	margin-left: 10%;
 }
 
 /*Mode édition*/
@@ -461,7 +467,7 @@ i {
 
 .Modale-Wrap {
 	width: 50%;
-	height: 90%;
+	height: auto;
 	background-color: #FFFFFF;
 	border-radius: 10px;
 	/*max-height: 750px;*/
@@ -511,6 +517,7 @@ i {
 
 .Supprimer-Button-Modale {
 	color: #D65353;
+	margin-bottom: 30px;
 }
 
 /*Inside Modale*/
@@ -648,10 +655,44 @@ i {
 	background: #A7A7A7;
 	border-radius: 60px;
 	margin-top: 10px;
+	margin-bottom: 30px;
 }
 
 .Border {
 	border-bottom: 1px solid #B3B3B3;
 	margin-top: 15px ;
 	margin-bottom: 15px;
+}
+
+.Infos-Photos-Modale #valider:hover {
+	background-color: #1D6154;
+}
+
+/*détails*/
+
+#Login {
+	margin-right: -20px;
+}
+
+.divHeader a:hover{
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 19px;
+	color: #000000;
+}
+
+.divHeader a {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 19px;
+	color: #000000;
+}
+
+.Image-Add {
+	width: 40% ;
+	object-fit: contain;
 }

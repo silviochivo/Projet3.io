@@ -99,9 +99,10 @@ function loadProjectsModale() {
                     
                     let trashIcon = document.createElement("a");
                     trashIcon.innerHTML+= '<i class="fa-regular fa-trash-can"></i>';
-                    trashIcon.addEventListener('click', function(e){
+                    trashIcon.addEventListener('click', async function(e){
                         e.preventDefault();
                         figureElement.remove();
+                        await deleteProjectsConfirmed(WorkId);
                     });
 
                     divImagesModale.appendChild(figureElement);
@@ -123,28 +124,37 @@ function loadProjectsModale() {
     }
 }
 
+//Fonction pour supprimer travaux de l´API
+async function deleteProjectsConfirmed(workId) {
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.token}`
+        }
+    });
+
+    if (response.ok) {
+        console.log('Travail supprimé avec succès');
+    } else {
+        console.log('Impossible de supprimer le travail');
+    }
+
+}
+
+
 function removeItemsModale () {
     const divGalerieModale = document.querySelector('.galeriePhotoModale');
     divGalerieModale.innerHTML = "" ;
 }
 
 
-//fonction supprimer toute la galerie 
+//Fonction pour sauvegarder les changements 
 const publierChangements = document.getElementById('Boutton-Publier-Changements');
 publierChangements.addEventListener('click',function(e){
     e.preventDefault()
-
-    async function deleteProjectsConfirmed(){
-        let response = await fetch('http://localhost:5678/api/works/${workId}',{
-         method: "DELETE",
-         headers: {
-            "content-Type": "application/json",
-            "Authorisation": "Bearer " + sessionStorage.getItem('userData')
-        }},
-        );
-
-    }
-
+    window.location.reload();
 })
 
 
@@ -185,4 +195,142 @@ closeButton2Link.addEventListener('click', function(event) {
     event.preventDefault();
     closepage2Modale ();
     closeBoiteModale();
+});
+
+// Fonction pour supprimer toute la galerie
+const supprimerGalerie = document.querySelector('.Supprimer-Button-Modale');
+supprimerGalerie.addEventListener('click', function(event) {
+    event.preventDefault();
+    const imagesModale = document.querySelector('.Images-Modale')
+    imagesModale.remove();
+});
+
+
+const formData = new FormData();
+
+
+//Fonction pour ajouter une image 
+const userData = JSON.parse(sessionStorage.getItem('userData'));
+const ajoutButton = document.querySelector('.Ajout-Button-Modale');
+const ajoutModale = document.querySelector('.Modale-Add');
+const ajoutPhotosModale = document.querySelector('.Ajout-Photos-Modale');
+const maxImageSize = 4 * 1024 * 1024; // 4 Mo en octets
+
+if (userData) {
+
+    ajoutButton.addEventListener('click', function() {
+        ajoutModale.style.display = 'block';
+    });
+
+    const ajoutPhotoInput = document.querySelector('.Ajout-Photos-Modale input[type="submit"]');
+        ajoutPhotoInput.addEventListener('click', function() {
+    // ouvrir une boîte de dialogue pour sélectionner une image
+    const fileInput = document.createElement('input');
+    fileInput.classList.add("fileInput");
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.addEventListener('change', function() {
+
+        const title = document.getElementById('titre').value;
+        let category = document.getElementById('category').value;
+
+        if (category == "Objets") {
+            category = 1;
+    
+        } else if (category == "Appartements"){
+            category = 2;
+            
+        } else if(category == "Hotels & restaurants"){
+            category = 3;
+        }
+    
+        category = parseInt(category);
+
+        formData.append("image",fileInput.files[0]);
+        formData.append('title', title);
+        formData.append('category', category);
+    
+        const file = fileInput.files[0];
+        console.log(fileInput.files);
+        if (file && file.size <= maxImageSize) {
+            ajoutPhotosModale.innerHTML = "";
+            const imageUrl = URL.createObjectURL(file);
+            const imageAdd = document.createElement('img');
+            imageAdd.classList.add("Image-Add");
+            imageAdd.src = imageUrl;
+            ajoutPhotosModale.appendChild(imageAdd);
+
+            
+            
+        } else {
+            alert("Le fichier sélectionné est trop volumineux. Veuillez sélectionner un fichier de moins de 4 Mo.");
+        }
+    });
+    fileInput.click();
+    });
+}
+
+
+// Fonction pour envoyer un nouveau projet à l'API
+const validerEnvoiNouveauProjet = document.getElementById('valider');
+validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
+    e.preventDefault();
+
+    /*const title = document.getElementById('titre').value;
+    let category = document.getElementById('category').value;
+    const image = fileInput.files[0];
+    //const image = document.querySelector('.Image-Add');
+
+    // Vérifier que toutes les données ont été fournies
+    if (!title || !category || !image) {
+        alert("Veuillez remplir tous les champs du formulaire");
+    return;
+    }
+
+    if (category == "Objets") {
+        category = 1;
+
+    } else if (category == "Appartements"){
+        category = 2;
+        
+    } else if(category == "Hotels & restaurants"){
+        category = 3;
+    }
+
+    category = parseInt(category);
+
+    console.log(title);
+    console.log(image);
+    console.log(category);
+*/
+    if (userData) {
+        const response = await fetch(`http://localhost:5678/api/works`,{
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${userData.token}`,
+                'accept': 'application/json',
+                'Content-Type': 'multipart/form-data'
+            },
+            body: formData
+        })
+        .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error => {
+                console.error(error)
+            });
+
+        if (response.ok) {
+            alert("Le nouveau projet a été ajouté avec succès !");
+            // Réinitialiser le formulaire
+            document.getElementById('titre').value = "";
+            document.getElementById('category').value = "";
+            ajoutPhotosModale.innerHTML = "";
+        } else {
+            alert("Une erreur est survenue lors de l'envoi du projet. Veuillez réessayer plus tard.");
+        }
+    } else {
+        console.log("Access denied");
+    }
 });
