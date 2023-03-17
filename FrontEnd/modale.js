@@ -90,11 +90,21 @@ function loadProjectsModale() {
 
                     let arrowIcon = document.createElement("a");
                     arrowIcon.classList.add("ArrowIcon");
+                    arrowIcon.style.display = 'none';
                     arrowIcon.innerHTML+= '<i class="fa-solid fa-arrows-up-down-left-right"></i>';
 
                     imageElement.addEventListener('mouseover', () => {
-                        arrowIconClass = document.document.querySelector('.ArrowIcon');
-                        arrowIconClass.style.display = 'block';
+                        arrowIcon.style.display = 'block';
+                    });
+                    imageElement.addEventListener('mouseout', () => {
+                        arrowIcon.style.display = 'none';
+                    });
+
+                    iconsDiv.addEventListener('mouseover', () => {
+                        arrowIcon.style.display = 'block';
+                    });
+                    iconsDiv.addEventListener('mouseout', () => {
+                        arrowIcon.style.display = 'none';
                     });
                     
                     let trashIcon = document.createElement("a");
@@ -124,6 +134,7 @@ function loadProjectsModale() {
     }
 }
 
+
 //Fonction pour supprimer travaux de l´API
 async function deleteProjectsConfirmed(workId) {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
@@ -140,7 +151,6 @@ async function deleteProjectsConfirmed(workId) {
     } else {
         console.log('Impossible de supprimer le travail');
     }
-
 }
 
 
@@ -208,12 +218,12 @@ supprimerGalerie.addEventListener('click', function(event) {
 
 const formData = new FormData();
 
-
 //Fonction pour ajouter une image 
 const userData = JSON.parse(sessionStorage.getItem('userData'));
 const ajoutButton = document.querySelector('.Ajout-Button-Modale');
 const ajoutModale = document.querySelector('.Modale-Add');
 const ajoutPhotosModale = document.querySelector('.Ajout-Photos-Modale');
+const copieAjoutPhotosModale = ajoutPhotosModale.innerHTML;
 const maxImageSize = 4 * 1024 * 1024; // 4 Mo en octets
 
 if (userData) {
@@ -226,42 +236,33 @@ if (userData) {
         ajoutPhotoInput.addEventListener('click', function() {
     // ouvrir une boîte de dialogue pour sélectionner une image
     const fileInput = document.createElement('input');
+    console.log("test");
     fileInput.classList.add("fileInput");
     fileInput.type = 'file';
     fileInput.accept = 'image/*';
-    fileInput.addEventListener('change', function() {
+    fileInput.addEventListener('change', function() { 
 
-        const title = document.getElementById('titre').value;
-        let category = document.getElementById('category').value;
+    const file = fileInput.files[0];
+    
+    const imageAdd = document.createElement('img');
+    imageAdd.classList.add("Image-Add");
 
-        if (category == "Objets") {
-            category = 1;
-    
-        } else if (category == "Appartements"){
-            category = 2;
-            
-        } else if(category == "Hotels & restaurants"){
-            category = 3;
-        }
-    
-        category = parseInt(category);
+    const reader = new FileReader();
+    reader.addEventListener('load', function() {
+        // Ajouter le contenu de l'image à l'objet FormData une fois que la lecture est terminée
+        formData.append('image', file);
+    });
+    reader.readAsDataURL(file);
 
-        formData.append("image",fileInput.files[0]);
-        formData.append('title', title);
-        formData.append('category', category);
-    
-        const file = fileInput.files[0];
         console.log(fileInput.files);
+
         if (file && file.size <= maxImageSize) {
             ajoutPhotosModale.innerHTML = "";
             const imageUrl = URL.createObjectURL(file);
-            const imageAdd = document.createElement('img');
-            imageAdd.classList.add("Image-Add");
+            
             imageAdd.src = imageUrl;
             ajoutPhotosModale.appendChild(imageAdd);
 
-            
-            
         } else {
             alert("Le fichier sélectionné est trop volumineux. Veuillez sélectionner un fichier de moins de 4 Mo.");
         }
@@ -276,13 +277,13 @@ const validerEnvoiNouveauProjet = document.getElementById('valider');
 validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
     e.preventDefault();
 
-    /*const title = document.getElementById('titre').value;
+    const title = document.getElementById('titre').value;
     let category = document.getElementById('category').value;
-    const image = fileInput.files[0];
-    //const image = document.querySelector('.Image-Add');
+
+    const image = document.querySelector('.Image-Add');
 
     // Vérifier que toutes les données ont été fournies
-    if (!title || !category || !image) {
+    if (!title || !category | !image) {
         alert("Veuillez remplir tous les champs du formulaire");
     return;
     }
@@ -299,26 +300,21 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
 
     category = parseInt(category);
 
+    formData.append('title', title);
+    formData.append('category', category);
+
     console.log(title);
-    console.log(image);
     console.log(category);
-*/
+
+    
     if (userData) {
         const response = await fetch(`http://localhost:5678/api/works`,{
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${userData.token}`,
-                'accept': 'application/json',
-                'Content-Type': 'multipart/form-data'
+                'accept': 'application/json'
             },
             body: formData
-        })
-        .then(response => response.json())
-            .then(data => {
-                console.log(data)
-            })
-            .catch(error => {
-                console.error(error)
             });
 
         if (response.ok) {
@@ -327,6 +323,7 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
             document.getElementById('titre').value = "";
             document.getElementById('category').value = "";
             ajoutPhotosModale.innerHTML = "";
+            ajoutPhotosModale.innerHTML = copieAjoutPhotosModale ;
         } else {
             alert("Une erreur est survenue lors de l'envoi du projet. Veuillez réessayer plus tard.");
         }
@@ -334,3 +331,4 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
         console.log("Access denied");
     }
 });
+

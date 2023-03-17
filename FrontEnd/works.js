@@ -38,6 +38,9 @@ loadProjects();
 
 //Filtres 
 
+const userDataCheck = JSON.parse(sessionStorage.getItem('userData'));
+if (!userDataCheck) {
+
 async function filterProjects() {
     const response = await fetch("http://localhost:5678/api/works");
     const filterWorks = await response.json();
@@ -96,3 +99,6 @@ async function filterProjects() {
   
   filterProjects();
   
+} else {
+  console.log("Mode Edition, impossible d´afficher les filtres des projets")
+}
