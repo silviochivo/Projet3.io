@@ -39,7 +39,10 @@ if (window.location.href.endsWith("index.html")) {
 }
 
 
-//Filtres 
+
+
+
+//Création de la fonction Filtres 
 
 const userDataCheck = JSON.parse(sessionStorage.getItem('userData'));
 if (!userDataCheck && (window.location.href.endsWith("index.html"))) {
@@ -105,3 +108,5 @@ if (!userDataCheck && (window.location.href.endsWith("index.html"))) {
 } else {
   console.log("Mode Edition, impossible d´afficher les filtres des projets")
 }
+
+

@@ -714,3 +714,8 @@ i {
 	text-align: center;
 	color: #000000;
 }
+
+#Boutton-Publier-Changements:hover {
+	background-color: #1D6154;
+	color: white;
+}

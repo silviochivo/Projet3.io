@@ -287,17 +287,7 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
         alert("Veuillez remplir tous les champs du formulaire");
     return;
     }
-
-    if (category == "Objets") {
-        category = 1;
-
-    } else if (category == "Appartements"){
-        category = 2;
-        
-    } else if(category == "Hotels & restaurants"){
-        category = 3;
-    }
-
+   
     category = parseInt(category);
 
     formData.append('title', title);
@@ -306,7 +296,6 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
     console.log(title);
     console.log(category);
 
-    
     if (userData) {
         const response = await fetch(`http://localhost:5678/api/works`,{
             method: 'POST',
