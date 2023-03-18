@@ -1,61 +1,54 @@
 //Login 
+if (window.location.href.endsWith("login.html")) {
+  async function authentification () {
+    const formulaireLogin = document.querySelector(".ConexionBox");
+    const errorMessage = document.querySelector('.Message-Erreur');
+    errorMessage.style.color = 'red';
+    
+    
+    formulaireLogin.addEventListener("submit", async function(event){
+    event.preventDefault();
+    
+      let login = {
+        email : document.getElementById("email").value,
+        password : document.getElementById("password").value,
+      };
+    
+      try {
+      const response = await fetch("http://localhost:5678/api/users/login", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(login)
+      });
+    
+      if (response.ok) {
+          console.log("ConnectionAccepté")
+          //Sauvegarde des donnés de conection dans un Session Storage
+          const dataSession = await response.json();
+          sessionStorage.setItem('userData', JSON.stringify(dataSession));
+          // Rediriger vers la page de Modification
+          window.location.href = "index.html";
 
-async function authentification () {
-  const formulaireLogin = document.querySelector(".ConexionBox");
-  
-  const errorMessage = document.createElement('p');
-  errorMessage.textContent = "Email ou Mot de passe incorrect. Veuillez réssayer";
-  errorMessage.style.color = "red";
-  errorMessage.classList = "messageErreur"
-  errorMessage.style.display ="none"
-  // insérer le message d'erreur entre le h2 et le p
-  formulaireLogin.insertBefore(errorMessage, formulaireLogin.children[1]); 
+          editMode()
 
-  
-  formulaireLogin.addEventListener("submit", async function(event){
-  event.preventDefault();
-  
-    let login = {
-      email : document.getElementById("email").value,
-      password : document.getElementById("password").value,
-    };
-  
-    try {
-    const response = await fetch("http://localhost:5678/api/users/login", {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(login)
-    });
-  
-    if (response.ok) {
-        console.log("ConnectionAccepté")
-        //Sauvegarde des donnés de conection dans un Session Storage
-        const dataSession = await response.json();
-        sessionStorage.setItem('userData', JSON.stringify(dataSession));
-        // Rediriger vers la page de Modification
-        window.location.href = "index.html";
+      }else {
+        //Erreur Identifiant ou Mot de Passe
+        console.log(error)
+        console.log(response.statusText); // Erreur Mot de passe 
 
-        editMode()
-
-    }else {
-      //Erreur Identifiant ou Mot de Passe
-      console.log(error)
-      console.log(response.statusText); // Erreur Mot de passe 
-
+        errorMessage.style.display = "block";
+      }
+    
+    }catch (error) {
+      console.log("Erreur Email / Mot de Passe")
       errorMessage.style.display = "block";
     }
-  
-  }catch (error) {
-    console.log("Erreur Email / Mot de Passe")
-
-    errorMessage.style.display = "block";
+    
+      });
   }
-  
-    });
-}
-  
-authentification();
-
+    
+  authentification();
+};
 
 // Fonction qui crée le mode Administrateur 
 
@@ -70,7 +63,7 @@ function editMode() {
   const modaleIcon = document.getElementById("Modale");
   const modifierImage = document.querySelector('.Modifier-Image');
   const lienModale = document.querySelector('.Lien-Open-Modale');
-    
+      
   if (userData) {
 
     header.style.marginTop = "0px"
@@ -96,7 +89,6 @@ function editMode() {
     logoutButton.style.display = 'none';
     loginButton.style.display = 'block';
   }
-  
 }
 
 if (window.location.pathname === "/index.html") {
@@ -147,3 +139,59 @@ function clearEditMode() {
   cacherFiltres.style.marginTop = "";
 }
 
+
+//fonction des bouttons Filtres 
+if (window.location.href.endsWith("index.html") && !userDataCheck) {
+
+  const tousButton = document.getElementById("Boutton-Filter-Tous");
+  const objetsButton = document.getElementById("Boutton-Filter-Objets");
+  const appartementsButton = document.getElementById("Boutton-Filter-Appartements");
+  const hotelsEtRestaurantsButton = document.getElementById("Boutton-Filter-Hotels-Et-Restaurants");
+
+  tousButton.style.backgroundColor = "#1D6154" ;
+  tousButton.style.color = "white" ;
+
+  tousButton.addEventListener("click", function() {
+    tousButton.style.backgroundColor = "#1D6154" ;
+    tousButton.style.color = "white" ;
+    objetsButton.style.backgroundColor = "white";
+    objetsButton.style.color = "#1D6154";
+    appartementsButton.style.backgroundColor = "white";
+    appartementsButton.style.color = "#1D6154";
+    hotelsEtRestaurantsButton.style.backgroundColor = "white";
+    hotelsEtRestaurantsButton.style.color = "#1D6154";
+  });
+
+  objetsButton.addEventListener("click", function() {
+    objetsButton.style.backgroundColor = "#1D6154";
+    objetsButton.style.color = "white";
+    appartementsButton.style.backgroundColor = "white";
+    appartementsButton.style.color = "#1D6154";
+    hotelsEtRestaurantsButton.style.backgroundColor = "white";
+    hotelsEtRestaurantsButton.style.color = "#1D6154";
+    tousButton.style.backgroundColor = "white" ;
+    tousButton.style.color = "#1D6154" ;
+  });
+
+  appartementsButton.addEventListener("click", function() {
+    objetsButton.style.backgroundColor = "white";
+    objetsButton.style.color = "#1D6154";
+    appartementsButton.style.backgroundColor = "#1D6154";
+    appartementsButton.style.color = "white";
+    hotelsEtRestaurantsButton.style.backgroundColor = "white";
+    hotelsEtRestaurantsButton.style.color = "#1D6154";
+    tousButton.style.backgroundColor = "white" ;
+    tousButton.style.color = "#1D6154" ;
+  });
+
+  hotelsEtRestaurantsButton.addEventListener("click", function() {
+    objetsButton.style.backgroundColor = "white";
+    objetsButton.style.color = "#1D6154";
+    appartementsButton.style.backgroundColor = "white";
+    appartementsButton.style.color = "#1D6154";
+    hotelsEtRestaurantsButton.style.backgroundColor = "#1D6154";
+    hotelsEtRestaurantsButton.style.color = "white";
+    tousButton.style.backgroundColor = "white" ;
+    tousButton.style.color = "#1D6154" ;
+  });
+}

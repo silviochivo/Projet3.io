@@ -139,6 +139,7 @@ a :active  {
 	display: block;
 	width: 80%;
 	margin: auto;
+	margin-top: 10%;
 }
 
 #introduction article {
@@ -243,21 +244,6 @@ button {
 	padding: 10px;
 }
 
-button:hover {
-	background-color: #1D6154;
-	color: white;
-}
-
-button:active {
-	background-color: #1D6154;
-	color: white;
-}
-
-
-button:focus {
-	background-color: #1D6154;
-	color: white;
-}
 
 .ConexionBox {
 	display: flex;
@@ -388,7 +374,6 @@ header {
 }
 
 #Boutton-Publier-Changements {
-	border-color: #FFFFFF;
 	font-family: 'Work Sans';
 	font-style: normal;
 	font-weight: 500;
@@ -399,11 +384,12 @@ header {
 	padding: 8px 15px;
 }
 
-.messageErreur {
+.Message-Erreur {
 	margin-bottom: 20px;
-	border-color: red;
 	align-self: center;
+	display: none;
 }
+
 
 i {
 	color: #000000;
@@ -693,4 +679,38 @@ i {
 .Image-Add {
 	width: 40% ;
 	object-fit: contain;
+}
+
+#openModale,
+.Modale-Add {
+	display: none;
+}
+
+#strong {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 19px;
+	color: #000000;
+}
+
+.Modale-link p{
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	text-align: center;
+	color: #000000;
+}
+
+.Modale-link p:active{
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	text-align: center;
+	color: #000000;
 }
