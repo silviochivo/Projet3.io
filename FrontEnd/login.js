@@ -1,54 +1,48 @@
-//Login 
+//Fonction de Login 
+
 if (window.location.href.endsWith("login.html")) {
-  async function authentification () {
-    const formulaireLogin = document.querySelector(".ConexionBox");
-    const errorMessage = document.querySelector('.Message-Erreur');
-    errorMessage.style.color = 'red';
+  const formulaireLogin = document.querySelector(".ConexionBox");
+  const errorMessage = document.querySelector('.Message-Erreur');
+  errorMessage.style.color = 'red';
+  
+  
+  formulaireLogin.addEventListener("submit", async function(event){
+  event.preventDefault();
+  
+    let login = {
+      email : document.getElementById("email").value,
+      password : document.getElementById("password").value,
+    };
     
+    const response = await fetch("http://localhost:5678/api/users/login", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(login)
+    });
     
-    formulaireLogin.addEventListener("submit", async function(event){
-    event.preventDefault();
-    
-      let login = {
-        email : document.getElementById("email").value,
-        password : document.getElementById("password").value,
-      };
-    
-      try {
-      const response = await fetch("http://localhost:5678/api/users/login", {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(login)
-      });
-    
-      if (response.ok) {
-          console.log("ConnectionAccepté")
-          //Sauvegarde des donnés de conection dans un Session Storage
-          const dataSession = await response.json();
-          sessionStorage.setItem('userData', JSON.stringify(dataSession));
-          // Rediriger vers la page de Modification
-          window.location.href = "index.html";
+    if (response.ok) {
+      console.log("ConnectionAccepté")
+      //Sauvegarde des donnés de conection dans un Session Storage
+      const dataSession = await response.json();
+      sessionStorage.setItem('userData', JSON.stringify(dataSession));
+      // Rediriger vers la page de Modification
+      window.location.href = "index.html";
 
-          editMode()
+      editMode()
 
-      }else {
-        //Erreur Identifiant ou Mot de Passe
-        console.log(error)
-        console.log(response.statusText); // Erreur Mot de passe 
+    } else {
+      //Erreur Identifiant ou Mot de Passe
+      console.log(response.statusText); // Erreur Mot de passe 
 
-        errorMessage.style.display = "block";
-      }
-    
-    }catch (error) {
+      errorMessage.style.display = "block";
       console.log("Erreur Email / Mot de Passe")
       errorMessage.style.display = "block";
     }
-    
-      });
-  }
-    
-  authentification();
-};
+
+  
+  });
+}
+
 
 // Fonction qui crée le mode Administrateur 
 
@@ -112,6 +106,7 @@ function LogoutSession() {
   }
 }
 
+
 //Fonction qui renitialise le mode administrateur 
 
 function clearEditMode() {
@@ -138,6 +133,7 @@ function clearEditMode() {
 
   cacherFiltres.style.marginTop = "";
 }
+
 
 
 //fonction des bouttons Filtres 

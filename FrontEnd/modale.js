@@ -12,6 +12,7 @@ function openBoiteModale() {
     createPage2Modale ()
 }
     
+
 function closeBoiteModale() {
     const Modale = document.getElementById('openModale');
     Modale.style.display = 'none';
@@ -23,6 +24,7 @@ function closeBoiteModale() {
     closepage2Modale () 
 }
     
+
 function outsideClick(event) {
     const Modale = document.getElementById('openModale');
     if (event.target == Modale) {
@@ -30,6 +32,7 @@ function outsideClick(event) {
     }
 }
     
+
 document.addEventListener('DOMContentLoaded', function() {
     const openModaleLink = document.querySelector('.Lien-Open-Modale');
     const closeButtonLink = document.querySelector('.Close-Modale-1');
@@ -39,11 +42,14 @@ document.addEventListener('DOMContentLoaded', function() {
         openBoiteModale();
     });
     
+
     closeButtonLink.addEventListener('click', function(event) {
         event.preventDefault();
         closeBoiteModale();
     });
 });
+
+
 
 
 //Function Load Projects sur la modale
@@ -135,6 +141,9 @@ function loadProjectsModale() {
 }
 
 
+
+
+
 //Fonction pour supprimer travaux de l´API
 async function deleteProjectsConfirmed(workId) {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
@@ -148,10 +157,13 @@ async function deleteProjectsConfirmed(workId) {
 
     if (response.ok) {
         console.log('Travail supprimé avec succès');
+        let deletedFigureElement = document.querySelector(`[data-work-id="${workId}"]`);
+        deletedFigureElement.remove();
     } else {
         console.log('Impossible de supprimer le travail');
     }
 }
+
 
 
 function removeItemsModale () {
@@ -180,6 +192,7 @@ function createPage2Modale () {
     })
 }
 
+
 //Fonction navigation exit Modale Page2
 function closepage2Modale () {
     const page2Modale = document.querySelector('.Modale-Add');
@@ -188,6 +201,7 @@ function closepage2Modale () {
     page1Modale.style.display = 'block';
 
 }
+
 
 // Fonction pour revenir à la 1ere boîte Modale
 const backPage1Modale = document.querySelector('.fa-arrow-left-long')
@@ -207,6 +221,7 @@ closeButton2Link.addEventListener('click', function(event) {
     closeBoiteModale();
 });
 
+
 // Fonction pour supprimer toute la galerie
 const supprimerGalerie = document.querySelector('.Supprimer-Button-Modale');
 supprimerGalerie.addEventListener('click', function(event) {
@@ -216,9 +231,11 @@ supprimerGalerie.addEventListener('click', function(event) {
 });
 
 
-const formData = new FormData();
+
+
 
 //Fonction pour ajouter une image 
+const formData = new FormData();
 const userData = JSON.parse(sessionStorage.getItem('userData'));
 const ajoutButton = document.querySelector('.Ajout-Button-Modale');
 const ajoutModale = document.querySelector('.Modale-Add');
@@ -232,44 +249,53 @@ if (userData) {
         ajoutModale.style.display = 'block';
     });
 
+    function ajoutPhoto () {
     const ajoutPhotoInput = document.querySelector('.Ajout-Photos-Modale input[type="submit"]');
-        ajoutPhotoInput.addEventListener('click', function() {
-    // ouvrir une boîte de dialogue pour sélectionner une image
-    const fileInput = document.createElement('input');
-    console.log("test");
-    fileInput.classList.add("fileInput");
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.addEventListener('change', function() { 
+    ajoutPhotoInput.addEventListener('click', function() {
 
-    const file = fileInput.files[0];
-    
-    const imageAdd = document.createElement('img');
-    imageAdd.classList.add("Image-Add");
+        // ouvrir une boîte de dialogue pour sélectionner une image
+        const fileInput = document.createElement('input');
+        console.log("Procesus Ajout Image");
+        fileInput.classList.add("fileInput");
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.addEventListener('change', function() { 
 
-    const reader = new FileReader();
-    reader.addEventListener('load', function() {
-        // Ajouter le contenu de l'image à l'objet FormData une fois que la lecture est terminée
-        formData.append('image', file);
-    });
-    reader.readAsDataURL(file);
+        const file = fileInput.files[0];
+        
+        const imageAdd = document.createElement('img');
+        imageAdd.classList.add("Image-Add");
+
+        const reader = new FileReader();
+        reader.addEventListener('load', function() {
+            formData.delete('image');
+            // Ajouter le contenu de l'image à l'objet FormData une fois que la lecture est terminée
+            formData.append('image', file);
+        });
+        reader.readAsDataURL(file);
 
         console.log(fileInput.files);
 
         if (file && file.size <= maxImageSize) {
             ajoutPhotosModale.innerHTML = "";
             const imageUrl = URL.createObjectURL(file);
-            
+                
             imageAdd.src = imageUrl;
             ajoutPhotosModale.appendChild(imageAdd);
 
         } else {
             alert("Le fichier sélectionné est trop volumineux. Veuillez sélectionner un fichier de moins de 4 Mo.");
         }
-    });
-    fileInput.click();
+        });
+        fileInput.click();
     });
 }
+ajoutPhoto ()
+}
+
+
+
+
 
 
 // Fonction pour envoyer un nouveau projet à l'API
@@ -279,7 +305,6 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
 
     const title = document.getElementById('titre').value;
     let category = document.getElementById('category').value;
-
     const image = document.querySelector('.Image-Add');
 
     // Vérifier que toutes les données ont été fournies
@@ -287,8 +312,6 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
         alert("Veuillez remplir tous les champs du formulaire");
     return;
     }
-   
-    category = parseInt(category);
 
     formData.append('title', title);
     formData.append('category', category);
@@ -308,11 +331,32 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
 
         if (response.ok) {
             alert("Le nouveau projet a été ajouté avec succès !");
-            // Réinitialiser le formulaire
+            
+            const work = await response.json();
+
+            // Créer un nouvel élément figure et afficher dans la gallerie 
+            let sectionProjet = document.querySelector(".gallery");
+            let figureElement = document.createElement("figure")
+
+            let imageElement = document.createElement("img");
+            imageElement.src = work.imageUrl;
+            imageElement.alt = work.title;
+
+            let figureCaptionElement = document.createElement("figcaption")
+            figureCaptionElement.innerHTML = work.title;
+
+            figureElement.appendChild(imageElement);
+            figureElement.appendChild(figureCaptionElement);
+            figureElement.setAttribute("data-work-id", work.id);
+            sectionProjet.appendChild(figureElement);
+
+            // Réinitialiser le formulaire d´envoi du nouveau projet
             document.getElementById('titre').value = "";
             document.getElementById('category').value = "";
-            ajoutPhotosModale.innerHTML = "";
             ajoutPhotosModale.innerHTML = copieAjoutPhotosModale ;
+            formData.delete('title');
+            formData.delete('category');
+            ajoutPhoto ();
         } else {
             alert("Une erreur est survenue lors de l'envoi du projet. Veuillez réessayer plus tard.");
         }
@@ -321,3 +365,9 @@ validerEnvoiNouveauProjet.addEventListener("click", async function(e) {
     }
 });
 
+
+
+
+
+    
+    

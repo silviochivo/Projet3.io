@@ -25,6 +25,8 @@ if (window.location.href.endsWith("index.html")) {
           
           figureElement.appendChild(imageElement);
           figureElement.appendChild(figureCaptionElement);
+          // ajout de l'attribut data-work-id afin de supprimer l´élément lors de la requete DELETE
+          figureElement.setAttribute("data-work-id", work[i].id); 
           sectionProjet.appendChild(figureElement);
         }
       }
